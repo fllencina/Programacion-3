@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>Login</title>
+        
+        <script type="text/javascript">
+            
+            // 
+            // Saludar("Fernanda");
+            // alert(resultado);
+
+            function Saludar(nombre){
+                 alert("Hola " + nombre);
+            }
+
+            window.onload=Carga;//la variable Carga es un puntero a funcion Carga(); guarda la referencia a la funcion
+            
+            function Carga()
+            {
+                // document.getElementById('btnEnviar').onclick=ValidarUsuario;
+                document.getElementById('btnEnviar').addEventListener("click",ValidarUsuario);//add evento es para agregar varios eventos a un mismo boton
+                document.getElementById('btnEnviar').addEventListener("click",function(){
+                    alert("otra funcion");
+                });
+                document.getElementById('btnEnviar').removeEventListener("click",ValidarUsuario);//remove evento
+                
+                
+                
+            }
+            function ValidarUsuario()
+            {
+                var usuario="fernanda";
+                var contrasenia="123456";
+                var usuarioIngresa=document.getElementById('inputUsuario');
+                var contraseniaIngresa=document.getElementById('inputContraseña');
+                if(usuarioIngresa.value!=""){
+
+                        if(usuario==usuarioIngresa.value)
+                        {
+                            if(contraseña===contraseñaIngresa.value)
+                            {
+                                alert("Datos ingresados correctamente");
+                            }
+                            else{
+                                alert("La clave ingresada es incorrecta");
+                            }
+                        }
+                        else{
+                            alert("El usuario ingresado no es correcto");
+                        }
+                }
+                else{
+                    
+                    alert("Debe ingresar datos antes de enviar");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        
+      
+            <fieldset>
+                    <legend>Login:</legend>
+            <label>Usuario:</label>
+            <br>
+            <input type="text" name="txtUsuario" id="inputUsuario">
+            <br>
+            <label>Contrasenia:</label>
+            <br>
+            <input type="password" name="txtPassword" id="inputContraseña">
+            <br>
+            <input type="checkbox" checked name="checkRecordar"> <label>Recordar Uusario y contraseña</label>
+            <br>
+            <input type="button"  id="btnEnviar" value="Enviar" > <!--onclick="ValidarUsuario();-->
+            <input type="reset" value="Limpiar">
+           
+        </fieldset>
+      
+    </body>
+</html>

@@ -1,20 +1,17 @@
 
 <!-- 
 
-Lencina Fernanda
-
-Aplicación Nº 21 ( Listado CSV y array de usuarios)
+Aplicación Nº 24 ( Listado JSON y array de usuarios)
 Archivo: listado.php
 método:GET
 Recibe qué listado va a retornar(ej:usuarios,productos,vehículos,...etc),por ahora solo tenemos
 usuarios).
-En el caso de usuarios carga los datos del archivo usuarios.csv.
+En el caso de usuarios carga los datos del archivo usuarios.json.
 se deben cargar los datos en un array de usuarios.
 Retorna los datos que contiene ese array en una lista
 <ul>
-<li>Coffee</li>
-<li>Tea</li>
-<li>Milk</li>
+<li>apellido, nombre,foto</li>
+<li>apellido, nombre,foto</li>
 </ul>
 Hacer los métodos necesarios en la clase usuario -->
 
@@ -31,7 +28,9 @@ Hacer los métodos necesarios en la clase usuario -->
 	switch ($TipoLista) {
 		case 'usuarios':
 		echo "Lista de usuarios: <br>";
-			$arrayUsuarios=Usuario::LeerUsuarios("Usuarios.csv");
+		if(file_exists("Usuarios.json") )
+			{
+			$arrayUsuarios=Usuario::LeerUsuariosJson("Usuarios.json");
 			if(!empty($arrayUsuarios))
 			{
 				echo Usuario::MostrarLista($arrayUsuarios);
@@ -39,7 +38,12 @@ Hacer los métodos necesarios en la clase usuario -->
 			else{
 				echo "No hay usuarios en la lista o no se encontro el archivo";
 			}
+		}
+		else{
+			echo "<br> No se encuentra el archivo. <br>";
+		}
 			break;
+		
 		
 		default:
 			# code...

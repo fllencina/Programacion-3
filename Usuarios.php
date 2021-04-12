@@ -14,130 +14,17 @@ Hacer los métodos necesarios en la clase usuario -->
 	
 	class Usuario
 	{
-		public $email;
-		public $nombre;
-		public $clave;
-		public $id;
-		public $fecha;
-		public $foto;
+		private $email;
+		private $nombre;
+		private $clave;
 
-		function __construct ($email,$nombre="",$clave, $Foto=null)
+		function __construct ($email,$nombre="",$clave)
 		{
-			$this->email=$email;
-			$this->nombre=$nombre;
-			$this->clave=$clave;	
-				
-				$this->id=self::ObtieneIDUsuario();
-				
 			
-				$this->fecha=self::ObtenerFecha();
+				$this->email=$email;
+				$this->nombre=$nombre;
+				$this->clave=$clave;
 			
-			if($Foto!=null)
-			{
-				if(!realpath("Usuarios\Fotos\\"))	
-				{
-					mkdir("Usuarios");
-					mkdir("Usuarios\Fotos");
-				}	
-
-				if(move_uploaded_file($Foto, "./Usuarios/Fotos/".$this->email.".jpg",))
-					{
-						echo "<br>Se movio Foto <br>";
-						$this->foto="\Usuarios\Fotos\\".$this->email.".jpg";
-					}
-				else{
-						echo "<br>No Se movio Foto <br>";
-				}
-			}
-		}
-
-		function ObtenerFecha()
-		{
-			return date("d-m-Y");
-		}
-
-		static function  ObtieneIDUsuario()
-		{
-			if(!file_exists("UsuarioID.txt")){
-				$file=fopen("UsuarioID.txt","w+");
-				fwrite($file, 0);
-				fclose($file);					
-			}
-
-			$file=fopen("UsuarioID.txt","r");
-			$idUsuario = fgets($file);
-			fclose($file);
-			$file=fopen("UsuarioID.txt","w");
-			fwrite($file, $idUsuario+1);
-			fclose($file);
-			return $idUsuario+1;
-		}		
-
-		static function addToJSON($arrayJson,$path,$dato)
-		{	
-			$strRet;
-			$fh = fopen($path, 'w+');
-			fwrite($fh,"[");
-				for($i=0;$i<count($arrayJson);$i++)
-				{
-					$jsonencoded = json_encode($arrayJson[$i],true,JSON_FORCE_OBJECT);
-					
-					fwrite($fh, $jsonencoded);	
-					if($i<(count($arrayJson)-1))
-					{	
-						fwrite($fh,",\r\n");
-					}
-					else{
-						//fwrite($fh,",\r\n");
-					}
-				}
-				$Retorno=false;
-				if($dato!=null) 
-				{
-					$jsonencoded = json_encode($dato,true,JSON_FORCE_OBJECT);
-					if(count($arrayJson)==0)
-					{
-						$Retorno=fwrite($fh, $jsonencoded);
-					}
-					else{
-						$Retorno=fwrite($fh, ",\r\n" . $jsonencoded);
-					
-					}
-				}	
-				fwrite($fh,"]");
-				fclose($fh);
-
-				if($Retorno)
-				{
-					$strRet="Dato Agregado Correctamente.";
-				}
-				else{
-					$strRet="El Dato no pudo ser agregado.";
-				}
-			
-			return $strRet;		
-		}
-
-		static function LeerJSON($path)
-		{
-			$Array=array();
-			if(file_exists($path))
-			{ 	
-				$datos = file_get_contents($path);
-				$json = json_decode($datos);
-				if(!empty($json))
-				{			
-					foreach ($json as $DatoEspecifico) 
-					{  
-	    				array_push($Array, $DatoEspecifico);
-					}
-				}	
-			}
-			else{
-				$file=fopen($path,"w+");
-				fclose($file);
-			}
-			return $Array;
 		}
 
 		function AddToCSV()
@@ -183,7 +70,7 @@ Hacer los métodos necesarios en la clase usuario -->
 			$strRet="<ul>";
 			for($i=0;$i<count($UsuariosArray);$i++)
 			{
-				$strRet.="<li>". "nombre: " .$UsuariosArray[$i]->nombre . ", email: " .$UsuariosArray[$i]->email . ", foto: " .$UsuariosArray[$i]->foto . "</li>";
+				$strRet.="<li>". "nombre: " .$UsuariosArray[$i]->nombre . ", email: " .$UsuariosArray[$i]->email . ", clave: " .$UsuariosArray[$i]->clave . "</li>";
 				
 			}
 			$strRet.="</ul>";
@@ -204,11 +91,9 @@ Hacer los métodos necesarios en la clase usuario -->
 						if($UsuariosArray[$i]->clave==$this->clave)
 						{
 							$strRet= "Verificado.";
-							break;
 						}
 						else{
 							$strRet ="No coinciden los datos.";
-							break;
 						}
 					}
 					else{
@@ -220,20 +105,6 @@ Hacer los métodos necesarios en la clase usuario -->
 				$strRet="No se puede leer el archivo, o esta vacio.";
 			}
 			return $strRet;
-		}
-		static function ExisteUsuario($_usuarioID,$arrayUsuarios)
-		{
-			if(!empty($arrayUsuarios))
-			{
-				for($i=0;$i<count($arrayUsuarios);$i++)
-				{
-					if($arrayUsuarios[$i]->id==$_usuarioID)
-					{
-						return true;
-					}
-				}
-			}		
-			return false;
 		}
 	}
 

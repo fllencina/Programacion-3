@@ -1,5 +1,4 @@
 
-
 <!-- Lencina Fernanda
 
 Aplicación Nº 15 (Figuras geométricas)
@@ -21,36 +20,45 @@ dibujarlo por pantalla. -->
 
 
 <?php
-	class  Rectangulo extends FiguraGeometrica
+include "Rectangulo.php";
+include "Triangulo.php";
+
+
+	abstract class FiguraGeometrica
 	{
-		private $_ladoUno;
-		private $_ladoDos;
+		protected $_color;
+		protected $_perimetro;
+		protected $_superficie;
 
-
-		public function __construct($l1, $l2) 
+		public function _constructor( ){
+			 $_color = "";
+       		 $_superficie = 0.0;
+       		 $_perimetro = 0.0;
+		}
+		public function GetColor()
 		{
-	        $this->_ladoUno = $l1;
-	        $this->_ladoDos = $l2;
-	        $this->CalcularDatos();
-	   	}
+			return $this->_color;
+		}
+		public function SetColor($_color)
+		{
+			return $this->_color= $_color;
+		}
+	
+		public function ToString() 
+		{
+	        $strRet = "FiguraGeometrica <br>";
+	        $strRet .= "Color: " . $this->_color . "<br>";
+	        $strRet .= "Superficie: " . $this->_superficie . "<br>";
+	        $strRet .= "Perimetro: " . $this->_perimetro . "<br>";
 
-	    protected function CalcularDatos() 
-	    {
-	        $this->_superficie = number_format($this->_ladoUno * $this->_ladoDos,2);
-	        $this->_perimetro = number_format(($this->_ladoUno * 2) + ($this->_ladoDos * 2),2);
-	    }
-	     public function Dibujar() 
-	    {
-        	$strRet = "\n &nbsp;&nbsp;\n";
+	        $strRet .= "Dibujo: <br>\n<br>" . $this->Dibujar() . "<br>";
 
-	        for ( $altura = 0; $altura < $this->_ladoDos; $altura++ ) {
-	            for ( $base = 0; $base < $this->_ladoUno; $base++ ) {
-	                $strRet .= "*";
-	            }
-	            $strRet .= "\n<br>&nbsp;&nbsp;\n";
-	        }
         	return $strRet;
-    	}
+  	 	}
+
+    	protected abstract function CalcularDatos();
+
+    	public abstract function Dibujar();
 	}
 ?>
 

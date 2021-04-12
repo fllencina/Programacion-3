@@ -19,38 +19,17 @@ Ejemplo:
 Utilizar el método ToString para obtener toda la información completa del objeto, y luego
 dibujarlo por pantalla. -->
 
-
 <?php
-	class  Rectangulo extends FiguraGeometrica
-	{
-		private $_ladoUno;
-		private $_ladoDos;
+	include "FiguraGeometrica.php";
 
+	$rectangulo = new Rectangulo(5, 3);
+	$rectangulo->Setcolor("green");
 
-		public function __construct($l1, $l2) 
-		{
-	        $this->_ladoUno = $l1;
-	        $this->_ladoDos = $l2;
-	        $this->CalcularDatos();
-	   	}
+	 echo "<div style=display:inline-block;margin-left:20px;color:",$rectangulo->Getcolor()," >",$rectangulo->ToString(),"</div>";
+	
+	$triangulo = new Triangulo(7, 3);
+	$triangulo->SetColor("blue");
+	echo "<div style=display:inline-block;margin-left:30px;color:",$triangulo->Getcolor()," >",$triangulo->ToString(),"</div>" ;
 
-	    protected function CalcularDatos() 
-	    {
-	        $this->_superficie = number_format($this->_ladoUno * $this->_ladoDos,2);
-	        $this->_perimetro = number_format(($this->_ladoUno * 2) + ($this->_ladoDos * 2),2);
-	    }
-	     public function Dibujar() 
-	    {
-        	$strRet = "\n &nbsp;&nbsp;\n";
-
-	        for ( $altura = 0; $altura < $this->_ladoDos; $altura++ ) {
-	            for ( $base = 0; $base < $this->_ladoUno; $base++ ) {
-	                $strRet .= "*";
-	            }
-	            $strRet .= "\n<br>&nbsp;&nbsp;\n";
-	        }
-        	return $strRet;
-    	}
-	}
 ?>
 
